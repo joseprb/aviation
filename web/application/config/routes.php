@@ -55,3 +55,11 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['register'] = 'RegisterController';
 $route['register/usernamecheck'] = 'RegisterController/usernamecheck';
+
+$route['test'] = 'DashboardController';
+
+$route['admin'] = 'ReviewController';
+$route['admin/login'] = 'AdminController/login';
+$route['admin/logout'] = 'AdminController/logout';
+$route['admin/review'] = 'ReviewController';
+$route['admin/komentar'] = 'KomentarController';
