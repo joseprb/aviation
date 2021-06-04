@@ -13,6 +13,7 @@ class KomentarController extends CI_Controller {
             redirect(base_url('admin/login'));
         }
         $data['title'] = 'Komentar - Admin | Aviation';
+        $data['titleonly'] = 'Komentar';
         $data['komentar'] = $this->KomentarModel->getAll();
         $this->load->view('admin/komentar', $data);
     }

@@ -3,9 +3,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class DashboardController extends CI_Controller {
 
+    function __construct() {
+        parent::__construct();
+
+        $this->load->model('ArtikelModel');
+        $this->load->model('Reviewmodel');
+    }
+
     public function index() {
-        $data['title'] = 'Dashboard - Aviation';
+        $data['title'] = 'Home - Aviation';
+        $data['artikel'] = $this->ArtikelModel->getAll();
+        $data['reviews'] = $this->Reviewmodel->getRandom3();
         $this->load->view('home', $data);
+    }
+
+    public function search($q) {
+        $data['title'] = 'Search Result - Aviation';
+        $data['artikel'] = $this->ArtikelModel->search($q);
+        $this->load->view('search', $data);
+    }
+
+    public function artikel($id) {
+        $data['title'] = 'Artikel - Aviation';
+        $data['artikel'] = $this->ArtikelModel->getById($id);
+        $data['reviews'] = $this->Reviewmodel->getByIdArtikel($id);
+        $this->load->view('artikel', $data);
     }
 
 }

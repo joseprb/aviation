@@ -7,4 +7,8 @@ class AdminModel extends CI_Model {
         return $this->db->where('username', $u)->where('password', $p)->get('admin')->row();
     }
 
+    public function getById($id) {
+        return $this->db->where('idAdmin', $id)->get('admin')->row(0);
+    }
+
 }

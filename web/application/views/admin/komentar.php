@@ -195,7 +195,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; foreach ($komentar as $km) { ?>
-                                                    <tr data-id="<?php echo $km->idReview; ?>">
+                                                    <tr data-id="<?php echo $km->idKomentar; ?>">
                                                         <td><?php echo $i++; ?></td>
                                                         <td><?php echo $km->namaTempatWisata; ?></td>
                                                         <td><?php echo $km->nama; ?></td>
@@ -265,14 +265,14 @@
                 });
 
                 $('.btn-delete').click(function(e) {
-                    if (confirm('Hapus review ini?')) {
+                    if (confirm('Hapus komentar ini?')) {
                         let id = $(this).parent().parent().attr('data-id');
                         $.ajax({
                             method: 'POST',
                             url: uri + 'KomentarController/deleteKomentar',
                             data: {id: id},
                         }).done(function(response) {
-                            alert('Review berhasil dihapus');
+                            alert('Komentar berhasil dihapus');
                             location.reload();
                         });
                     }

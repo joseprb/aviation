@@ -663,7 +663,7 @@
                                                         <div class="wpb_wrapper">
                                                             <div class="wpb_text_column wpb_content_element">
                                                                 <div class="wpb_wrapper">
-                                                                    <h2>Artikel Terbaru</h2>
+                                                                    <h2>Hasil Pencarian</h2>
                                                                 </div>
                                                             </div>
                                                             <div class="mkdf-elements-holder mkdf-responsive-mode-768">
@@ -709,6 +709,8 @@
                                                                                             <?php
                                                                                             $CI =& get_instance();
                                                                                             $CI->load->model('ArtikelModel');
+                                                                                            if (count($artikel) > 0) {
+                                                                                
                                                                                             foreach ($artikel as $art):
                                                                                             $img = $CI->ArtikelModel->getImg($art->idTempatWisata);
                                                                                             $imgtext = (count($img) > 0) ? "artikel/".$img[0]->imageName : "noimage.png" ?>
@@ -752,7 +754,14 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <?php endforeach ?>
+                                                                                            <?php endforeach;
+                                                                                            } else { ?>
+                                                                                            <div class="row">
+                                                                                                <div class="col">
+                                                                                                    <h4 style="text-align:center;">Data tidak ditemukan</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <?php } ?>
                                                                                             <div class="mkdf-tours-list-grid-sizer"></div>
                                                                                         </div>
                                                                                     </div>
@@ -817,25 +826,122 @@
                                                                                                 <div class="mkdf-eh-item-content mkdf-eh-custom-564051" style="padding: 23% 0 0 0;">
                                                                                                     <div class="mkdf-tours-top-reviews-carousel-holder">
                                                                                                         <div class="mkdf-tours-top-reviews-carousel-inner">
-                                                                                                            <h3 class="mkdf-tours-top-reviews-carousel-title">Member Review</h3>
+                                                                                                            <h3 class="mkdf-tours-top-reviews-carousel-title">TOP REVIEW</h3>
                                                                                                             <div class="mkdf-tours-top-reviews-carousel">
-                                                                                                                <?php foreach ($reviews as $rev): ?>
                                                                                                                 <div class="mkdf-tours-top-reviews-carousel-item">
                                                                                                                     <h4 class="mkdf-tours-top-reviews-item-title">
-                                                                                                                        <a href="<?php echo base_url('artikel/'.$rev->idTempatWisata); ?>"><?php echo $rev->namaTempatWisata ?></a>
+                                                                                                                        <a href="https://gotravel.qodeinteractive.com/tour-item/miami-beach/">Miami Beach</a>
                                                                                                                     </h4>
+                                                                                                                    <div class="mkdf-tour-reviews-criteria-holder">
+                                                                                                                        <div class="mkdf-tour-reviews-criteria-holder-inner">
+                                                                                                                            <span class="mkdf-tour-reviews-rating-holder">
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                            </span>
+                                                                                                                        </div>
+                                                                                                                    </div>
                                                                                                                     <div class="mkdf-tours-top-reviews-item-content">
                                                                                                                         <p>
-                                                                                                                            <?php echo $rev->inputanReview; ?>
+                                                                                                                            My fiance and I had never been to Miami Beach, but wanted to plan a unique elopement trip to Florida. We had no idea
+                                                                                                                            where to start, and turned to some internet research to find the services of Zicasso. I cannot speak highly enough
+                                                                                                                            about our 3 week trip to this place.
                                                                                                                         </p>
                                                                                                                     </div>
                                                                                                                     <div class="mkdf-tours-top-reviews-item-author-info">
+                                                                                                                        <span class="mkdf-tours-top-reviews-item-author-avatar">
+                                                                                                                            <img
+                                                                                                                                alt=""
+                                                                                                                                src="https://secure.gravatar.com/avatar/5e05adc12f12755e7e36629cb3c4d0c5?s=54&#038;d=mm&#038;r=g"
+                                                                                                                                srcset="https://secure.gravatar.com/avatar/5e05adc12f12755e7e36629cb3c4d0c5?s=108&#038;d=mm&#038;r=g 2x"
+                                                                                                                                class="avatar avatar-54 photo"
+                                                                                                                                height="54"
+                                                                                                                                width="54"
+                                                                                                                            />
+                                                                                                                        </span>
                                                                                                                         <h5 class="mkdf-tours-top-reviews-item-author-name">
-                                                                                                                            <?php echo $rev->nama; ?>
+                                                                                                                            RAYMOND THOMAS
                                                                                                                         </h5>
                                                                                                                     </div>
                                                                                                                 </div>
-                                                                                                                <?php endforeach ?>
+                                                                                                                <div class="mkdf-tours-top-reviews-carousel-item">
+                                                                                                                    <h4 class="mkdf-tours-top-reviews-item-title">
+                                                                                                                        <a href="https://gotravel.qodeinteractive.com/tour-item/yangshuo-mist/">Yangshuo Mist</a>
+                                                                                                                    </h4>
+                                                                                                                    <div class="mkdf-tour-reviews-criteria-holder">
+                                                                                                                        <div class="mkdf-tour-reviews-criteria-holder-inner">
+                                                                                                                            <span class="mkdf-tour-reviews-rating-holder">
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                            </span>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="mkdf-tours-top-reviews-item-content">
+                                                                                                                        <p>
+                                                                                                                            I cannot speak highly enough about our 3 week trip to this place and the services provided by this travel company.
+                                                                                                                            Everything was seamless. The private guides were interesting and knowledgable. We felt that they were more than just
+                                                                                                                            guides. It was like we had a friend in each city.
+                                                                                                                        </p>
+                                                                                                                    </div>
+                                                                                                                    <div class="mkdf-tours-top-reviews-item-author-info">
+                                                                                                                        <span class="mkdf-tours-top-reviews-item-author-avatar">
+                                                                                                                            <img
+                                                                                                                                alt=""
+                                                                                                                                src="https://secure.gravatar.com/avatar/70f6cb72f62fd8d94c61883b7cd7c29a?s=54&#038;d=mm&#038;r=g"
+                                                                                                                                srcset="https://secure.gravatar.com/avatar/70f6cb72f62fd8d94c61883b7cd7c29a?s=108&#038;d=mm&#038;r=g 2x"
+                                                                                                                                class="avatar avatar-54 photo"
+                                                                                                                                height="54"
+                                                                                                                                width="54"
+                                                                                                                            />
+                                                                                                                        </span>
+                                                                                                                        <h5 class="mkdf-tours-top-reviews-item-author-name">
+                                                                                                                            TASHA STEWART
+                                                                                                                        </h5>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="mkdf-tours-top-reviews-carousel-item">
+                                                                                                                    <h4 class="mkdf-tours-top-reviews-item-title">
+                                                                                                                        <a href="https://gotravel.qodeinteractive.com/tour-item/colorful-india/">Colorful India</a>
+                                                                                                                    </h4>
+                                                                                                                    <div class="mkdf-tour-reviews-criteria-holder">
+                                                                                                                        <div class="mkdf-tour-reviews-criteria-holder-inner">
+                                                                                                                            <span class="mkdf-tour-reviews-rating-holder">
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                                <span class="mkdf-tour-reviews-star-holder"><span class="mkdf-tour-reviews-star icon_star"></span></span>
+                                                                                                                            </span>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="mkdf-tours-top-reviews-item-content">
+                                                                                                                        <p>
+                                                                                                                            Everything was seamless. The private guides were interesting and knowledgeable. We felt that they were more than
+                                                                                                                            just guides. It was like we had a friend in each city. I cannot speak highly enough about our 3 week trip to this
+                                                                                                                            place and the services provided by them.
+                                                                                                                        </p>
+                                                                                                                    </div>
+                                                                                                                    <div class="mkdf-tours-top-reviews-item-author-info">
+                                                                                                                        <span class="mkdf-tours-top-reviews-item-author-avatar">
+                                                                                                                            <img
+                                                                                                                                alt=""
+                                                                                                                                src="https://secure.gravatar.com/avatar/c565181d9b0b43c58c5978e39ce5e196?s=54&#038;d=mm&#038;r=g"
+                                                                                                                                srcset="https://secure.gravatar.com/avatar/c565181d9b0b43c58c5978e39ce5e196?s=108&#038;d=mm&#038;r=g 2x"
+                                                                                                                                class="avatar avatar-54 photo"
+                                                                                                                                height="54"
+                                                                                                                                width="54"
+                                                                                                                            />
+                                                                                                                        </span>
+                                                                                                                        <h5 class="mkdf-tours-top-reviews-item-author-name">
+                                                                                                                            SANDRA MEDINA
+                                                                                                                        </h5>
+                                                                                                                    </div>
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
