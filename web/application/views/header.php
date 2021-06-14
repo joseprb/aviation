@@ -6,10 +6,10 @@
                                     <div id="text-4" class="widget widget_text mkdf-top-bar-widget">
                                         <div class="mkdf-top-bar-widget-inner">
                                             <div class="textwidget">
-                                                <span class="mkdf-icon-shortcode mkdf-normal" style="margin: 0 3px 0 10px;" data-hover-color="#ffffff" data-color="#ffffff">
+                                                <!-- <span class="mkdf-icon-shortcode mkdf-normal" style="margin: 0 3px 0 10px;" data-hover-color="#ffffff" data-color="#ffffff">
                                                     <span aria-hidden="true" class="mkdf-icon-font-elegant icon_phone mkdf-icon-element" style="color: #ffffff; font-size: 14px;"></span>
                                                 </span>
-                                                1-677-124-44227
+                                                1-677-124-44227 -->
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +61,7 @@
                                                     id="nav-menu-item-3055"
                                                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-3053 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children mkdf-active-item narrow"
                                                 >
-                                                    <a href="<?php echo base_url('#'); ?>" class="current">
+                                                    <a href="<?php echo base_url('request'); ?>" class="current">
                                                         <span class="item_outer">
                                                             <span class="item_inner"><span class="item_text">Request Artikel</span></span>
                                                         </span>

@@ -51,8 +51,6 @@
                                                     <th>Nama</th>
                                                     <th>Alamat</th>
                                                     <th>Deskripsi</th>
-                                                    <th>Admin</th>
-                                                    <th>Foto</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -61,14 +59,16 @@
                                                 $CI =& get_instance();
                                                 $CI->load->model('AdminModel');
                                                 $i = 1; foreach ($artikel as $art) { ?>
-                                                    <tr data-id="<?php echo $art->idTempatWisata; ?>">
+                                                    <tr data-id="<?php echo $art->idApplied; ?>">
                                                         <td><?php echo $i++; ?></td>
-                                                        <td><?php echo $art->namaTempatWisata; ?></td>
-                                                        <td><?php echo $art->alamat; ?></td>
-                                                        <td><?php echo $art->deskripsi; ?></td>
-                                                        <td><?php echo $CI->AdminModel->getById($art->idAdmin)->username; ?></td>
-                                                        <td><button type="button" class="btn btn-showimg btn-info btn-sm">LIHAT FOTO</button></td>
-                                                        <td><button type="button" class="btn btn-edit btn-success btn-sm"><i class="fa fa-edit"></i></button> <button type="button" class="btn btn-delete btn-danger btn-sm"><i class="fas fa-trash"></i></button></td>
+                                                        <td><?php echo $art->namaApplied; ?></td>
+                                                        <td><?php echo $art->alamatApplied; ?></td>
+                                                        <td><?php echo $art->deskripsiApplied; ?></td>
+                                                        <?php if ($art->isApproved == 1) { ?>
+                                                        <td><span class="badge bg-success">Approved</span></td>
+                                                        <?php } else { ?>
+                                                        <td><button type="button" class="btn btn-approve btn-success btn-sm"><i class="fa fa-check"></i></button> <button type="button" class="btn btn-delete btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
+                                                        <?php } ?>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -78,8 +78,6 @@
                                                     <th>Nama</th>
                                                     <th>Alamat</th>
                                                     <th>Deskripsi</th>
-                                                    <th>Admin</th>
-                                                    <th>Foto</th>
                                                     <th></th>
                                                 </tr>
                                             </tfoot>
@@ -110,129 +108,6 @@
         <!-- ./wrapper -->
 <?php $this->load->view('admin/footerscripts'); ?>
 
-        <div class="modal fade" id="modalImg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Foto</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <label for="imgupload" class="col-3 col-form-label">Tambah foto baru</label>
-                            <div class="col-9">
-                                <form id="formImg">
-                                    <input id="imgupload" type="file" class="form-control" name="image" accept="image/x-png, image/gif, image/jpeg" required>
-                                    <input type="hidden" name="idTempatWisata">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="doInsert()">Submit</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-
-        <div class="modal fade" id="modalAdd">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Tambah Artikel</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addForm" >
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Nama Artikel</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" name="nama" required>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Alamat</label>
-                                <div class="col-9">
-                                    <textarea name="alamat" class="form-control" required></textarea>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Deskripsi</label>
-                                <div class="col-9">
-                                    <textarea name="deskripsi" class="form-control" required></textarea>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Foto</label>
-                                <div class="col-9">
-                                    <input type="file" class="form-control" name="image" accept="image/x-png, image/gif, image/jpeg" required>
-                                </div>
-                            </div>
-                            <input type="hidden" name="idAdmin" value="<?php echo $this->session->userdata('admin_logged_in'); ?>">
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        </form> 
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-
-        <div class="modal fade" id="modalEdit">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Artikel</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editForm" >
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Nama Artikel</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control" name="nama" required>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Alamat</label>
-                                <div class="col-9">
-                                    <textarea name="alamat" class="form-control" required></textarea>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Deskripsi</label>
-                                <div class="col-9">
-                                    <textarea name="deskripsi" class="form-control" required></textarea>
-                                </div>
-                            </div>
-                            <input type="hidden" name="idAdmin" value="<?php echo $this->session->userdata('admin_logged_in'); ?>">
-                            <input type="hidden" name="idTempatWisata">
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        </form> 
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-
         <script>
 
             var uri = '<?php echo base_url(); ?>';
@@ -253,34 +128,32 @@
                 });
 
                 $('.btn-delete').click(function(e) {
-                    if (confirm('Hapus artikel ini?')) {
+                    if (confirm('Tolak artikel ini?')) {
                         let id = $(this).parent().parent().attr('data-id');
                         $.ajax({
                             method: 'POST',
-                            url: uri + 'ArtikelController/deleteArtikel',
+                            url: uri + 'RequestController/deleteArtikel',
                             data: {id: id},
                         }).done(function(response) {
-                            alert('Artikel berhasil dihapus');
+                            alert('Artikel telah dihapus');
                             location.reload();
                         });
                     }
                 });
 
-                $('.btn-edit').click(function(e) {
-                    let id = $(this).parent().parent().attr('data-id');
-                    $.ajax({
-                        method: 'POST',
-                        url: uri + 'ArtikelController/findArtikel',
-                        data: {id: id},
-                    }).done(function(response) {
-                        response = $.parseJSON(response);
-                        $('#modalEdit .modal-body input[name=nama]').val(response.namaTempatWisata);
-                        $('#modalEdit .modal-body input[name=idTempatWisata]').val(response.idTempatWisata);
-                        $('#modalEdit .modal-body input[name=idAdmin]').val(response.idAdmin);
-                        $('#modalEdit .modal-body textarea[name=alamat]').html(response.alamat);
-                        $('#modalEdit .modal-body textarea[name=deskripsi]').html(response.deskripsi);
-                        $('#modalEdit').modal("show");
-                    });
+                $('.btn-approve').click(function(e) {
+                    if (confirm('Approve artikel ini?')) {
+                        let id = $(this).parent().parent().attr('data-id');
+                        $.ajax({
+                            method: 'POST',
+                            url: uri + 'RequestController/approve',
+                            data: {id: id},
+                        }).done(function(response) {
+                            // console.log(response);
+                            alert('Artikel telah diapprove');
+                            location.reload();
+                        });
+                    }
                 });
 
                 $('.btn-showimg').click(function(e) {

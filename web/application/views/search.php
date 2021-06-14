@@ -625,14 +625,14 @@
                                                                     <div class="mkdf-tours-filter-holder mkdf-tours-filter-horizontal mkdf-tours-filter-skin-dark mkdf-tours-filter-semitransparent mkdf-tours-full-width-filter">
                                                                         <div class="mkdf-grid">
                                                                             <div class="mkdf-tours-search-horizontal-filters-holder">
-                                                                                <form action="https://gotravel.qodeinteractive.com/tour-standard-list/" method="GET">
+                                                                                <form id="searchform">
                                                                                     <div class="mkdf-tours-filters-fields-holder">
                                                                                         <div style="width:80%" class="mkdf-tours-filter-field-holder mkdf-tours-filter-col">
                                                                                             <div class="mkdf-tours-input-with-icon">
                                                                                                 <span class="mkdf-tours-input-icon">
                                                                                                     <span class="icon_compass"></span>
                                                                                                 </span>
-                                                                                                <input type="text" value="" class="mkdf-tours-destination-search" name="destination" placeholder="Ketik kata kunci" />
+                                                                                                <input type="text" value="" class="mkdf-tours-destination-search" name="keyword" placeholder="Ketik kata kunci"  required />
                                                                                             </div>
                                                                                         </div>
                                                                                         <div style="width:20%"  class="mkdf-tours-filter-field-holder mkdf-tours-filter-submit-field-holder mkdf-tours-filter-col">
@@ -972,5 +972,18 @@
         <div class="rbt-toolbar" data-theme="GoTravel" data-featured="" data-button-position="25%" data-button-horizontal="right" data-button-alt="no"></div>
 
 <?php $this->load->view('bottomscripts'); ?>
+
+        <script type="text/javascript">
+            
+            $(document).ready(function() {
+                $('#searchform').submit(function(e) {
+                    e.preventDefault();
+                    let data = $(this).serializeArray();
+                    location.replace('<?php echo base_url('search/'); ?>' + data[0].value);
+                });
+            });
+
+        </script>
+
     </body>
 </html>

@@ -10,7 +10,6 @@ class VisitorController extends CI_Controller {
 
 	public function login() {
         $r = $this->VisitorModel->loginCheck($this->input->post('user_login_username'), md5($this->input->post('user_login_password'))); // match the username and password given by the user with the database
-        
         if ($r) { // if matches with database
             $this->session->set_userdata('visitor_logged_in', $r->idVisitor); // set logged in session
             echo json_encode(array('st' => 1, 'msg' => 'Login berhasil')); // set success feedback
@@ -21,7 +20,6 @@ class VisitorController extends CI_Controller {
 
     public function register() {
         $r = $this->VisitorModel->getByUsername($this->input->post('username')); // match the username and password given by the user with the database
-        // print_r($r);
         if (!$r) { // if matches with database
             $data['nama'] = $this->input->post('nama');
             $data['username'] = $this->input->post('username');

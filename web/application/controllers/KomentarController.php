@@ -18,10 +18,28 @@ class KomentarController extends CI_Controller {
         $this->load->view('admin/komentar', $data);
     }
 
+    public function findKomentarByReview() {
+        $artikel = $this->KomentarModel->getByReview($this->input->post('id'));
+        echo json_encode($artikel);
+    }
+
     public function deleteKomentar() {
         $id = $this->input->post('id');
 
         $this->KomentarModel->delete($id);
+    }
+
+    public function addComment() {
+        $this->load->model('ReviewModel');
+
+        $data['inputanKomentar'] = $this->input->post('comment');
+        $data['idVisitor'] = $this->input->post('idVisitor');
+        $data['idReview'] = $this->input->post('idReview');
+        $data['idTempatWisata'] = $this->ReviewModel->getById($data['idReview'])->idTempatWisata;
+
+        $insert = $this->KomentarModel->insert($data);
+
+        echo json_encode(array('stats' => 1, 'msg' => 'Komentar berhasil ditambah'));
     }
 
 }

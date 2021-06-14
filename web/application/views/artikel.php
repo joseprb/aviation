@@ -270,18 +270,23 @@
                                                         <div class="mkdf-tour-masonry-gallery clearfix">
                                                             <div class="mkdf-tour-grid-sizer"></div>
                                                             <div class="mkdf-tour-grid-gutter"></div>
+                                                            <div class="mkdf-tour-grid-gutter"></div>
                                                             <?php
                                                             $CI =& get_instance();
                                                             $CI->load->model('ArtikelModel');
                                                             $imgs = $CI->ArtikelModel->getImg($artikel->idTempatWisata);
+                                                            if (count($imgs) > 0) {
                                                             foreach ($imgs as $img): ?>
                                                             <div class="mkdf-tour-gallery-item mkdf-default-masonry-item">
                                                                 <div class="mkdf-tour-gallery-item-inner">
                                                                     <a href="<?php echo base_url('assets/images/artikel/'.$img->imageName); ?>" data-rel="prettyPhoto[gallery_pretty_photo]">
-                                                                    <img width="550" height="550" src="<?php echo base_url('assets/images/artikel/'.$img->imageName); ?>" class="attachment-full size-full" alt="ss" srcset="<?php echo base_url('assets/images/artikel/'.$img->imageName); ?> 550w" sizes="(max-width: 550px) 100vw, 550px" /> </a>
+                                                                    <img width="550" height="550" src="<?php echo base_url('assets/images/artikel/'.$img->imageName); ?>" class="attachment-full size-full" alt="ss" srcset="<?php echo base_url('assets/images/artikel/'.$img->imageName); ?> 550w, <?php echo base_url('assets/images/artikel/'.$img->imageName); ?> 150w, <?php echo base_url('assets/images/artikel/'.$img->imageName); ?> 300w, <?php echo base_url('assets/images/artikel/'.$img->imageName); ?> 115w" sizes="(max-width: 550px) 100vw, 550px" /> </a>
                                                                 </div>
-                                                            </div>  
-                                                            <?php endforeach ?>
+                                                            </div>
+                                                            <?php endforeach;
+                                                            } else { ?>
+                                                            Belum ada foto tersedia.
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -299,7 +304,7 @@
                                                                             <div class="mkdf-comment-info">
                                                                                 <h5 class="mkdf-comment-name">
                                                                                     <?php echo $r->nama; ?> 
-                                                                                    <span style="float:right;"><a href="#" onclick="report()"><small>Report</small></a> | <a href="#"><small>Lihat komentar</small></a></span>
+                                                                                    <span style="float:right;"><a href="#" onclick="report(event, '<?php echo $r->idReview ?>')"><small>Report</small></a> | <a href="#" onclick="showComment(event, '<?php echo $r->idReview ?>')"><small>Lihat komentar</small></a></span>
                                                                                 </h5>
                                                                             </div>
                                                                             <div class="mkdf-text-holder" id="comment-305">
@@ -364,59 +369,175 @@
         <div class="rbt-toolbar" data-theme="GoTravel" data-featured="" data-button-position="25%" data-button-horizontal="right" data-button-alt="no"></div>
 <?php $this->load->view('bottomscripts'); ?>
 
-        <!-- <div class="modal fade" id="modalEdit">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Report review</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="reportForm" >
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Kategori</label>
-                                <div class="col-9">
-                                    <select name="kategori">
-                                        <option>Hate Speech</option>
-                                        <option>Bahasa Kasar</option>
-                                        <option>Lainnya</option>
-                                    </select>
-                                </div>
+        <style type="text/css">
+            #reportModal, #commentModal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10000;
+                background: rgb(0 0 0 / 53%);
+            }
+            .modal-content {
+                position: relative;
+                top: 0;
+                left: 25%;
+                margin-top: 3%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0px 0px 14px #00000094;
+                width: 350px;
+            }
+            #commentModal .modal-content {
+                width: 550px!important;
+            }
+            /*#commentModal .modal-body .row:not(:last-child) {*/
+            #commentModal .modal-body .row {
+                border-bottom: 1px solid #d3d3d394;
+                padding: 10px 0;
+            }
+            #commentModal {
+                color: #000!important
+            }
+        </style>
+
+        <div id="reportModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Report review</h4>
+                </div>
+                <div class="modal-body">
+                    <?php if ($this->session->has_userdata('visitor_logged_in')) { ?>
+                    <form id="reportForm" >
+                        <div class="row" style="padding-bottom:10px">
+                            <label class="col-3 col-form-label">Kategori</label>
+                            <div class="col-9">
+                                <select name="kategori">
+                                    <option>Hate Speech</option>
+                                    <option>Bahasa Kasar</option>
+                                    <option>Misinformasi</option>
+                                    <option>Spam</option>
+                                    <option>Lainnya</option>
+                                </select>
                             </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Detail</label>
-                                <div class="col-9">
-                                    <textarea name="alamat" class="form-control" required></textarea>
-                                </div>
+                        </div>
+                        <div class="row" style="padding-bottom:10px">
+                            <label class="col-3 col-form-label">Detail</label>
+                            <div class="col-9">
+                                <textarea name="detail" class="form-control" required></textarea>
                             </div>
-                            <div class="row" style="padding-bottom:10px">
-                                <label class="col-3 col-form-label">Deskripsi</label>
-                                <div class="col-9">
-                                    <textarea name="deskripsi" class="form-control" required></textarea>
-                                </div>
-                            </div>
-                            <input type="hidden" name="idReview" >
-                            <input type="hidden" name="idVisitor" value="<?php echo $this->session->userdata('visitor_logged_in'); ?>">
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        </form> 
-                    </div>
+                        </div>
+                        <input type="hidden" name="idReview">
+                        <input type="hidden" name="idVisitor" value="<?php echo $this->session->userdata('visitor_logged_in'); ?>">
+                    <?php } else { ?>
+                    <span style="padding:10px 0">Mohon login terlebih dahulu</span>
+                    <?php } ?>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default modalclose">Close</button>
+                    <?php if ($this->session->has_userdata('visitor_logged_in')): ?>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <?php endif ?>
+                    </form> 
                 </div>
             </div>
-        </div> -->
+        </div>
+
+        <div id="commentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Komentar</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div style="display:table;width:100%;padding-top:10px">
+                    <?php if ($this->session->has_userdata('visitor_logged_in')) { ?>
+                    <form id="commentForm">
+                        <textarea style="display:table-cell;vertical-align:middle" name="comment" placeholder="Tambah komentar" required></textarea>
+                        <input type="hidden" name="idReview">
+                        <input type="hidden" name="idVisitor" value="<?php echo $this->session->userdata('visitor_logged_in'); ?>">
+                        <button style="display:table-cell;vertical-align:middle" type="submit">Submit</button>
+                    </form>
+                    <?php } else { ?>
+                    <p>Mohon login terlebih dahulu untuk menambah komentar baru</p>
+                    <?php } ?>
+                </div>
+                <div style="padding-top:10px" class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default modalclose">Close</button>
+                </div>
+            </div>
+        </div>
 
         <script type="text/javascript">
+
+            var userAgent = navigator.userAgent;
             
-            function report(e) {
-                e.preventDefault();
-                alert('test');
+            function report(event, id) {
+                event.preventDefault();
+                console.log(id);
+                $('#reportModal input[name=idReview]').val(id);
+                $('#reportModal').show();
             }
 
+            function showComment(event, id) {
+                event.preventDefault();
+                $('#commentModal .modal-body').html('');
+                $.ajax({
+                    method: 'POST',
+                    url: uri + 'KomentarController/findKomentarByReview',
+                    data: {id: id}
+                }).done(function(response) {
+                    let r = $.parseJSON(response);
+                    $('#commentForm input[name=idReview]').val(id);
+                    if (r.length > 0) {
+                        for (var i = 0; i < r.length; i++) {
+                            $('#commentModal .modal-body').append('<div class="row">'+
+                                '<div style="display:block;">'+
+                                    '<strong>'+ r[i].nama +'</strong>'+
+                                '</div>'+
+                                '<div>'+
+                                    r[i].inputanKomentar+
+                                '</div>'+
+                            '</div>');
+                        }
+                    } else {
+                        $('#commentModal .modal-body').html("Tidak ada komentar");
+                    }
+                });
+                $('#commentModal').show();
+            }
+
+            $('#reportModal .modalclose').click(function(e) {
+                e.preventDefault()
+                $('#reportModal').hide();
+            });
+
+            $('#commentModal .modalclose').click(function(e) {
+                e.preventDefault()
+                $('#commentModal').hide();
+            });
+
             $(document).ready(function() {
+                $('#reportForm').submit(function(e) {
+                    e.preventDefault();
+                    let data = $(this).serializeArray();
+                    $.ajax({
+                        method: 'POST',
+                        url: uri + 'ReportController',
+                        data: data
+                    }).done(function(response) {
+                        let r = $.parseJSON(response);
+                        if (r.stats == 1) {
+                            alert(r.msg);
+                            location.reload();
+                        } else {
+                            alert(r.msg);
+                        }
+                    });
+                });
 
                 $('#ratereviewform').submit(function(e) {
                     e.preventDefault();
@@ -424,6 +545,25 @@
                     $.ajax({
                         method: 'POST',
                         url: uri + 'ReviewController/addReviewRate',
+                        data: data
+                    }).done(function(response) {
+                        // console.log(response);
+                        let r = $.parseJSON(response);
+                        if (r.stats == 1) {
+                            alert(r.msg);
+                            location.reload();
+                        } else {
+                            alert(r.msg);
+                        }
+                    });
+                });
+
+                $('#commentForm').submit(function(e) {
+                    e.preventDefault();
+                    let data = $(this).serializeArray();
+                    $.ajax({
+                        method: 'POST',
+                        url: uri + 'KomentarController/addComment',
                         data: data
                     }).done(function(response) {
                         // console.log(response);

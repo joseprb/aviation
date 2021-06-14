@@ -176,62 +176,6 @@
                 });
             });
         </script>
-        <script type="text/javascript">
-            /* <![CDATA[ */
-            var mkdfToursSearchData = {
-                tours: [
-                    "Oldtimer Tour",
-                    "Fun in Prague",
-                    "City Selfie Tour",
-                    "Venice Canals",
-                    "Gaudi's City",
-                    "Moscow Tour",
-                    "Brusov Cruise",
-                    "New York Walk",
-                    "Charming Paris",
-                    "Canal Sailing",
-                    "Amsterdam Fun",
-                    "Seaside Rest",
-                    "Artsy New York",
-                    "Friendly Greece",
-                    "Flower Fields",
-                    "Ancient Japan",
-                    "Ibiza Summer",
-                    "Romantic Italy",
-                    "The Bahamas",
-                    "Oriental Bliss",
-                    "Sahara Fun",
-                    "Colorful India",
-                    "Yangshuo Mist",
-                    "Prague Sights",
-                    "Miami Beach",
-                    "Safari Africa",
-                ],
-                destinations: [
-                    "San Francisco",
-                    "Prague",
-                    "London",
-                    "Belgrade",
-                    "Prague",
-                    "Morocco",
-                    "Venice",
-                    "Brazil",
-                    "Paris",
-                    "Japan",
-                    "Canada",
-                    "Miami",
-                    "Dubai",
-                    "Greece",
-                    "Kenya",
-                    "Serbia",
-                    "Moscow",
-                    "Thailand",
-                    "Cinque Terre",
-                    "Kyoto",
-                ],
-            };
-            /* ]]> */
-        </script>
         <script src="<?php echo base_url('assets/js/a5ff0.js'); ?>"></script>
         <!-- <script type="text/javascript" src="<?php echo base_url('assets/js/rbt-modules.js?ver=5.2.2'); ?>"></script> -->
         <script src="<?php echo base_url('assets/js/6d18f.js'); ?>"></script>

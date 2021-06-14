@@ -8,10 +8,15 @@ class ReviewController extends CI_Controller {
         $this->load->model('ReviewModel');
     }
 
-    public function index() {
+    public function isLoggedIn() {
         if (!$this->session->has_userdata('admin_logged_in')) {
             redirect(base_url('admin/login'));
         }
+    }
+
+    public function index() {
+        $this->isLoggedIn();
+        
         $data['title'] = 'Review - Admin | Aviation';
         $data['titleonly'] = 'Review';
         $data['reviews'] = $this->ReviewModel->getAll();
@@ -19,9 +24,8 @@ class ReviewController extends CI_Controller {
     }
 
     public function rating() {
-        if (!$this->session->has_userdata('admin_logged_in')) {
-            redirect(base_url('admin/login'));
-        }
+        $this->isLoggedIn();
+        
         $data['title'] = 'Rating - Admin | Aviation';
         $data['titleonly'] = 'Rating';
         $data['reviews'] = $this->ReviewModel->getAllRating();
@@ -40,7 +44,7 @@ class ReviewController extends CI_Controller {
         $insert1 = $this->ReviewModel->insertReview($data);
         $insert1 = $this->ReviewModel->insertRating($data2);
 
-        json_encode(array('stats' => 1, 'msg' => 'Review telah disubmit'));
+        echo json_encode(array('stats' => 1, 'msg' => 'Review telah disubmit'));
     }
 
     public function deleteReview() {

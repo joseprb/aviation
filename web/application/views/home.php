@@ -625,14 +625,14 @@
                                                                     <div class="mkdf-tours-filter-holder mkdf-tours-filter-horizontal mkdf-tours-filter-skin-dark mkdf-tours-filter-semitransparent mkdf-tours-full-width-filter">
                                                                         <div class="mkdf-grid">
                                                                             <div class="mkdf-tours-search-horizontal-filters-holder">
-                                                                                <form action="https://gotravel.qodeinteractive.com/tour-standard-list/" method="GET">
+                                                                                <form id="searchform">
                                                                                     <div class="mkdf-tours-filters-fields-holder">
                                                                                         <div style="width:80%" class="mkdf-tours-filter-field-holder mkdf-tours-filter-col">
                                                                                             <div class="mkdf-tours-input-with-icon">
                                                                                                 <span class="mkdf-tours-input-icon">
                                                                                                     <span class="icon_compass"></span>
                                                                                                 </span>
-                                                                                                <input type="text" value="" class="mkdf-tours-destination-search" name="destination" placeholder="Ketik kata kunci" />
+                                                                                                <input type="text" value="" class="mkdf-tours-destination-search" name="keyword" placeholder="Ketik kata kunci"  required />
                                                                                             </div>
                                                                                         </div>
                                                                                         <div style="width:20%"  class="mkdf-tours-filter-field-holder mkdf-tours-filter-submit-field-holder mkdf-tours-filter-col">
@@ -709,9 +709,11 @@
                                                                                             <?php
                                                                                             $CI =& get_instance();
                                                                                             $CI->load->model('ArtikelModel');
+                                                                                            $CI->load->model('ReviewModel');
+
                                                                                             foreach ($artikel as $art):
                                                                                             $img = $CI->ArtikelModel->getImg($art->idTempatWisata);
-                                                                                            $imgtext = (count($img) > 0) ? "artikel/".$img[0]->imageName : "noimage.png" ?>
+                                                                                            $imgtext = (count($img) > 0) ? "artikel/".$img[0]->imageName : "noimage.png"; ?>
                                                                                             <div
                                                                                                 class="mkdf-tour-list-item-inner post-3658 tour-item type-tour-item status-publish has-post-thumbnail hentry tour-category-on-budget tour-category-romantic"
                                                                                             >
@@ -737,7 +739,13 @@
                                                                                                                         <h4 class="mkdf-tour-title"><?php echo $art->namaTempatWisata; ?></h4>
                                                                                                                         <span class="mkdf-tours-gallery-item-price-holder">
                                                                                                                             <span class="mkdf-tours-price-holder">
-                                                                                                                            <span class="icon_star"></span><span class="mkdf-tours-item-price"> 5</span>
+                                                                                                                            <span class="icon_star"></span>
+                                                                                                                            <?php $rate = $CI->ReviewModel->getAvgRatingByIdTW($art->idTempatWisata);
+                                                                                                                            if (isset($rate->avg_r)) { ?>
+                                                                                                                            <span class="mkdf-tours-item-price"> <?php echo number_format($rate->avg_r, 1); ?></span>
+                                                                                                                            <?php } else { ?>
+                                                                                                                            <small><em>Belum ada rating</em></small>
+                                                                                                                            <?php }  ?>
                                                                                                                             </span>
                                                                                                                         </span>
                                                                                                                     </div>
@@ -866,5 +874,18 @@
         <div class="rbt-toolbar" data-theme="GoTravel" data-featured="" data-button-position="25%" data-button-horizontal="right" data-button-alt="no"></div>
 
 <?php $this->load->view('bottomscripts'); ?>
+
+        <script type="text/javascript">
+            
+            $(document).ready(function() {
+                $('#searchform').submit(function(e) {
+                    e.preventDefault();
+                    let data = $(this).serializeArray();
+                    location.replace('<?php echo base_url('search/'); ?>' + data[0].value);
+                });
+            });
+
+        </script>
+
     </body>
 </html>

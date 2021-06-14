@@ -31,6 +31,10 @@ class ReviewModel extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function getById($id) {
+        return $this->db->where('idReview', $id)->get('review')->row(0);
+    }
+
     public function insertReview($data) {
         $this->db->insert('review', $data);
         return $this->db->insert_id();
@@ -43,6 +47,12 @@ class ReviewModel extends CI_Model {
 
     public function delete($id) {
         $this->db->where('idReview', $id)->delete('review');
+    }
+
+    public function getAvgRatingByIdTW($id) {
+        $this->db->select('AVG(inputanRating) as avg_r');
+        $this->db->where('idTempatWisata', $id);
+        return $this->db->get('rating')->row(0);
     }
 
 }

@@ -18,22 +18,7 @@
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1>Komentar</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active">Komentar</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.container-fluid -->
-                </section>
+<?php $this->load->view('admin/header'); ?>
 
                 <!-- Main content -->
                 <section class="content">
@@ -50,21 +35,23 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Tempat Wisata</th>
-                                                    <th>Visitor</th>
+                                                    <th>Category</th>
+                                                    <th>Detail</th>
                                                     <th>Review</th>
-                                                    <th>Komentar</th>
+                                                    <th>Visitor</th>
+                                                    <th>Timestamp</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $i = 1; foreach ($komentar as $km) { ?>
-                                                    <tr data-id="<?php echo $km->idKomentar; ?>">
+                                                <?php $i = 1; foreach ($reports as $rep) { ?>
+                                                    <tr data-id="<?php echo $rep->idReport; ?>">
                                                         <td><?php echo $i++; ?></td>
-                                                        <td><?php echo $km->namaTempatWisata; ?></td>
-                                                        <td><?php echo $km->nama; ?></td>
-                                                        <td><?php echo $km->inputanReview; ?></td>
-                                                        <td><?php echo $km->inputanKomentar; ?></td>
+                                                        <td><?php echo $rep->reportCategory; ?></td>
+                                                        <td><?php echo $rep->reportDetail; ?></td>
+                                                        <td><?php echo $rep->inputanReview; ?></td>
+                                                        <td><?php echo $rep->nama; ?></td>
+                                                        <td><?php echo $rep->timestamp; ?></td>
                                                         <td><button type="button" class="btn btn-delete btn-danger btn-sm"><i class="fas fa-trash"></i></button></td>
                                                     </tr>
                                                 <?php } ?>
@@ -72,10 +59,11 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Tempat Wisata</th>
-                                                    <th>Visitor</th>
+                                                    <th>Category</th>
+                                                    <th>Detail</th>
                                                     <th>Review</th>
-                                                    <th>Komentar</th>
+                                                    <th>Visitor</th>
+                                                    <th>Timestamp</th>
                                                     <th></th>
                                                 </tr>
                                             </tfoot>

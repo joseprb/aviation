@@ -24,10 +24,14 @@ class DashboardController extends CI_Controller {
     }
 
     public function artikel($id) {
-        $data['title'] = 'Artikel - Aviation';
         $data['artikel'] = $this->ArtikelModel->getById($id);
-        $data['reviews'] = $this->Reviewmodel->getByIdArtikel($id);
-        $this->load->view('artikel', $data);
+        if (isset($data['artikel']->idTempatWisata)) {
+            $data['title'] = $data['artikel']->namaTempatWisata . ' - Aviation';
+            $data['reviews'] = $this->Reviewmodel->getByIdArtikel($id);
+            $this->load->view('artikel', $data);
+        } else {
+            redirect(base_url(), 'refresh');
+        }
     }
 
 }

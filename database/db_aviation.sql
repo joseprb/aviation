@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2021 at 03:31 AM
+-- Generation Time: Jun 14, 2021 at 03:09 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -56,6 +56,15 @@ CREATE TABLE `appliedtempatwisata` (
   `idVisitor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `appliedtempatwisata`
+--
+
+INSERT INTO `appliedtempatwisata` (`idApplied`, `namaApplied`, `deskripsiApplied`, `alamatApplied`, `isApproved`, `idAdmin`, `idVisitor`) VALUES
+(2, 'tes1', 'tes2', 'tes3', 0, 0, 1),
+(3, 'asd', 'dsa', 'asd', 1, 2, 1),
+(4, 'art1', 'art1', 'art1', 1, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -76,7 +85,10 @@ INSERT INTO `artikelimages` (`idImage`, `idTempatWisata`, `imageName`) VALUES
 (2, 6, 'j0LS12PHBi.jpg'),
 (4, 2, 'ei7DROULgr.jpg'),
 (7, 2, 'IWORLMjn2s.jpg'),
-(8, 7, 'oGeuQeBjzp.jpg');
+(8, 7, 'oGeuQeBjzp.jpg'),
+(9, 2, 'aYY4ChWn8g.jpg'),
+(10, 10, 'KfcKGdXhAI.jpg'),
+(11, 11, 'toJGnEavez.jpg');
 
 -- --------------------------------------------------------
 
@@ -97,7 +109,10 @@ CREATE TABLE `komentar` (
 --
 
 INSERT INTO `komentar` (`idKomentar`, `idTempatWisata`, `idVisitor`, `idReview`, `inputanKomentar`) VALUES
-(2, 2, 1, 1, 'komen 2\r\n');
+(2, 2, 1, 1, 'komen 2\r\n'),
+(4, 2, 1, 1, 'teslg\r\n'),
+(5, 7, 1, 5, 'tes3'),
+(7, 2, 1, 3, 'tes komen');
 
 -- --------------------------------------------------------
 
@@ -144,7 +159,7 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`idRating`, `idTempatWisata`, `idVisitor`, `inputanRating`) VALUES
-(2, 6, 7, 5);
+(2, 7, 7, 5);
 
 -- --------------------------------------------------------
 
@@ -182,6 +197,15 @@ CREATE TABLE `report` (
   `idReview` int(11) NOT NULL,
   `idVisitor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `report`
+--
+
+INSERT INTO `report` (`idReport`, `reportCategory`, `reportDetail`, `timestamp`, `idReview`, `idVisitor`) VALUES
+(4, 'Hate Speech', 'sdasd', '2021-06-09 15:12:27', 1, 1),
+(5, 'Spam', 'dasd', '2021-06-13 11:18:19', 3, 1),
+(6, 'Spam', 'tes', '2021-06-14 03:02:33', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +249,10 @@ CREATE TABLE `tempatwisata` (
 
 INSERT INTO `tempatwisata` (`idTempatWisata`, `namaTempatWisata`, `alamat`, `deskripsi`, `idAdmin`) VALUES
 (2, 'artikel new ', 'sad sadde fwef', 'ds tgrtg', 2),
-(7, 'artikel test 2423', 'dk ldaskd i joi l l', 'sjdh eofwe wehrowei ', 2);
+(7, 'artikel test 2423', 'dk ldaskd i joi l l', 'sjdh eofwe wehrowei ', 2),
+(9, 'asd', 'asd', 'dsa', 2),
+(10, 'lorem ipsum', 'jl fksdfl l', 'lksf wproeprw ', 2),
+(11, 'art1', 'art1', 'art1', 2);
 
 --
 -- Indexes for dumped tables
@@ -311,19 +338,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appliedtempatwisata`
 --
 ALTER TABLE `appliedtempatwisata`
-  MODIFY `idApplied` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idApplied` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `artikelimages`
 --
 ALTER TABLE `artikelimages`
-  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idImage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `komentar`
 --
 ALTER TABLE `komentar`
-  MODIFY `idKomentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idKomentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `logcontribution`
@@ -353,7 +380,7 @@ ALTER TABLE `registeredvisitor`
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `idReport` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReport` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -365,7 +392,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `tempatwisata`
 --
 ALTER TABLE `tempatwisata`
-  MODIFY `idTempatWisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idTempatWisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
